@@ -25,7 +25,7 @@ output = tf.keras.layers.Dense(10, activation = 'softmax')(x)
 
 model = tf.keras.Model(inputs = inputLayer, outputs = output)
 model.compile('adam', loss = 'sparse_categorical_crossentropy', metrics = ['sparse_categorical_crossentropy', 'accuracy'])
-model.fit(x=get_train_data(train_images, train_labels), validation_data=get_validation_data(validation_images, validation_labels), epochs=50, verbose=1, callbacks=get_callbacks(), steps_per_epoch = len(train_images)/128)
+model.fit(x=get_train_data(train_images, train_labels), validation_data=get_validation_data(validation_images, validation_labels), epochs=100, verbose=1, callbacks=get_callbacks(), steps_per_epoch = len(train_images)/128)
 
 model1 = tf.keras.models.load_model('./checkpoints/cp.ckpt')
 model1.summary()

@@ -13,7 +13,7 @@ def get_train_data(data, labels):
 @tf.function
 def augment_data(image, label):
     if label in [0, 1, 2, 3, 4, 6, 8]:
-        image = tf.image.flip_left_right(image)
+        image = tf.image.random_flip_left_right(image)
 
     return image, label
 
