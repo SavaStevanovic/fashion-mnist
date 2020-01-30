@@ -19,14 +19,14 @@ for i in range(2):
     x = tf.keras.layers.MaxPool2D()(x)
 
 x = tf.keras.layers.Flatten()(x)
+x = tf.keras.layers.Dropout(rate = 0.25, seed = 42)(x)
 x = tf.keras.layers.Dense(256, activation = 'relu')(x)
 output = tf.keras.layers.Dense(10, activation = 'softmax')(x)
 
 model = tf.keras.Model(inputs = inputLayer, outputs = output)
 model.compile('adam', loss = 'sparse_categorical_crossentropy', metrics = ['sparse_categorical_crossentropy', 'accuracy'])
-model.fit(x=get_train_data(train_images, train_labels), validation_data=get_validation_data(validation_images, validation_labels), epochs=50, verbose=1, callbacks=get_callbacks())
+model.fit(x=get_train_data(train_images, train_labels), validation_data=get_validation_data(validation_images, validation_labels), epochs=50, verbose=1, callbacks=get_callbacks(), steps_per_epoch = len(train_images)/128)
 
 model1 = tf.keras.models.load_model('./checkpoints/cp.ckpt')
 model1.summary()
 result = model1.evaluate(x=test_images, y=test_labels, batch_size=32)
-print('Test:\n Sparse_categorical_crossentropy: {}\n Accuracy: {}'.format(result[1], result[2]))
