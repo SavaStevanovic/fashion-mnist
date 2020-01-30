@@ -1,5 +1,5 @@
 from setuptools import setup, find_packages
 setup(
-    name="fashion-mnist",
+    name="fashion_mnist",
     version="0.1"
 )
