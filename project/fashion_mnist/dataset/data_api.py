@@ -10,10 +10,14 @@ def get_train_data(data, labels):
 
     return dataset
 
-@tf.function
 def augment_data(image, label):
-    if label in [0, 1, 2, 3, 4, 6, 8]:
-        image = tf.image.random_flip_left_right(image)
+    image = tf.image.random_flip_left_right(image)
+    
+    lower_bound = tf.random.uniform(shape=(1, 2), minval=0.000, maxval = 1/28)
+    upper_bound = tf.random.uniform(shape=(1, 2), minval=27/28, maxval = 1.00)
+    image = tf.expand_dims(image, 0)
+    image = tf.image.crop_and_resize(image, tf.concat([lower_bound,upper_bound], -1), [0], (28, 28))
+    image = tf.squeeze(image, 0)
 
     return image, label
 

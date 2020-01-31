@@ -2,6 +2,7 @@ absl-py==0.8.1
 asn1crypto==0.24.0
 astor==0.8.0
 cryptography==2.1.4
+cycler==0.10.0
 # Editable install with no version control (fashion-mnist==0.1)
 -e /app
 gast==0.2.2
@@ -14,13 +15,18 @@ Keras-Applications==1.0.8
 Keras-Preprocessing==1.1.0
 keyring==10.6.0
 keyrings.alt==3.0
+kiwisolver==1.1.0
 Markdown==3.1.1
+matplotlib==3.1.2
 numpy==1.17.3
+opencv-python==4.1.2.30
 opt-einsum==3.1.0
 protobuf==3.10.0
 pycrypto==2.6.1
 pygobject==3.26.1
+pyparsing==2.4.6
 python-apt==1.6.4
+python-dateutil==2.8.1
 pyxdg==0.25
 scikit-learn==0.22.1
 scipy==1.4.1
