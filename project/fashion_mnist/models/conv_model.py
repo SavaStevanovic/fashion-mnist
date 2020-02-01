@@ -13,4 +13,4 @@ def get_model():
     x = tf.keras.layers.Dense(256, activation = 'relu')(x)
     output = tf.keras.layers.Dense(10, activation = 'softmax')(x)
 
-    return tf.keras.Model(inputs = inputLayer, outputs = output)
+    return tf.keras.Model(inputs = inputLayer, outputs = output, name = 'conv_model')
