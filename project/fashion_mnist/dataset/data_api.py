@@ -11,18 +11,22 @@ def get_train_data(data, labels):
     return dataset
 
 def augment_data(image, label):
+    image = tf.pad(tensor = image, paddings = tf.constant([[2, 2,], [2, 2]]), mode = "CONSTANT", constant_values = 0, name = 'pad')
+    image = tf.image.random_crop(image, (28, 28))
+    image, label = preprocess_data(image, label)
     image = tf.image.random_flip_left_right(image)
-    
-    lower_bound = tf.random.uniform(shape=(1, 2), minval=0.000, maxval = 1/28)
-    upper_bound = tf.random.uniform(shape=(1, 2), minval=27/28, maxval = 1.00)
-    image = tf.expand_dims(image, 0)
-    image = tf.image.crop_and_resize(image, tf.concat([lower_bound,upper_bound], -1), [0], (28, 28))
-    image = tf.squeeze(image, 0)
 
     return image, label
 
+def preprocess_data(image, labels):
+    image = tf.cast(image, tf.float32)
+    image = tf.expand_dims(image, -1)/ 255
+    return image, labels
+
+
 def get_validation_data(data, labels):
     dataset = tf.data.Dataset.from_tensor_slices((data, labels))
+    dataset = dataset.map(preprocess_data, num_parallel_calls = multiprocessing.cpu_count())
     dataset = dataset.batch(128)
 
     return dataset
