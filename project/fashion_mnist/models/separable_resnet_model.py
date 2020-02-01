@@ -2,7 +2,7 @@ import tensorflow as tf
 
 def get_model():
     inputLayer = tf.keras.layers.Input(shape = (28, 28, 1))
-    net = tf.keras.layers.Conv2D(filters=64, kernel_size=3, activation='relu', padding='SAME', use_bias=False)(inputLayer)
+    net = tf.keras.layers.Conv2D(filters=64, kernel_size=3, padding='SAME', use_bias=False)(inputLayer)
     net = tf.keras.layers.BatchNormalization()(net)
     net = tf.keras.layers.Activation('relu')(net)
 
