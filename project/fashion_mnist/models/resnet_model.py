@@ -6,7 +6,7 @@ def get_model():
     net = tf.keras.layers.BatchNormalization()(net)
     net = tf.keras.layers.Activation('relu')(net)
 
-    rens_net_blocks = 3
+    rens_net_blocks = 4
     for i in range(rens_net_blocks):
         net = residual_block(net, filters = 64*2**i)
         net = residual_block(net, filters = 64*2**i)

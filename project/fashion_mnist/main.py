@@ -10,7 +10,7 @@ from models import conv_model
 from models import resnet_model
 tf.enable_eager_execution()
 
-sample_data = True 
+sample_data = False 
 
 (train_images, train_labels), (test_images, test_labels) = tf.keras.datasets.fashion_mnist.load_data()
 test_images = np.expand_dims(test_images, axis = -1)/255
@@ -27,5 +27,5 @@ model.compile('adam', loss = 'sparse_categorical_crossentropy', metrics = ['spar
 model.fit(x=training_data, validation_data=validation_data, epochs=100, verbose=1, callbacks=get_callbacks(), steps_per_epoch = len(train_images)/128)
 
 test_model = tf.keras.models.load_model('./checkpoints/cp.ckpt')
-test_model.evaluate(x=test_images, y=test_labels, batch_size=32, verbose=1 )
+test_model.evaluate(x=test_images, y=test_labels, batch_size=32, verbose=1)
 test_model.summary()
