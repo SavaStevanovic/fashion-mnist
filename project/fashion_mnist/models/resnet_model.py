@@ -6,23 +6,29 @@ def get_model():
     net = tf.keras.layers.BatchNormalization()(net)
     net = tf.keras.layers.Activation('relu')(net)
 
-    for i in range(3):
+    rens_net_blocks = 3
+    for i in range(rens_net_blocks):
         net = residual_block(net, filters = 64*2**i)
         net = residual_block(net, filters = 64*2**i)
-        net = tf.keras.layers.MaxPool2D()(net)
+        if i+1==rens_net_blocks:
+            net = tf.keras.layers.AveragePooling2D()(net)
+        else:
+            net = tf.keras.layers.MaxPool2D()(net)
+
 
     net = tf.keras.layers.Flatten()(net)
     output = tf.keras.layers.Dense(10, activation = 'softmax')(net)
 
     return tf.keras.Model(inputs = inputLayer, outputs = output, name = 'resnet_model')
     
-def residual_block(net, filters, ):
-    net_pre = tf.keras.layers.Conv2D(filters=filters, kernel_size=1, padding='SAME', use_bias=False)(net)
+def residual_block(net, filters):
+    if net.shape[-1].value != filters:
+        net_pre = tf.keras.layers.Conv2D(filters=filters, kernel_size=1, padding='SAME', use_bias=False)(net)
+    else:
+        net_pre = net
     net = tf.keras.layers.Conv2D(filters=filters, kernel_size=3, padding='SAME', use_bias=False)(net)
     net = tf.keras.layers.BatchNormalization()(net)
     net = tf.keras.layers.Activation('relu')(net)
-    net = tf.keras.layers.add([net, net_pre])
-    net_pre = net
     net = tf.keras.layers.Conv2D(filters=filters, kernel_size=3, padding='SAME', use_bias=False)(net)
     net = tf.keras.layers.BatchNormalization()(net)
     net = tf.keras.layers.add([net, net_pre])

@@ -1,5 +1,7 @@
 import tensorflow as tf
 import numpy as np
+from data_visualisation.sample_data import get_training_sample
+from data_visualisation.sample_data import get_validation_sample
 from fashion_mnist.callbacks.get_callbacks import get_callbacks
 from fashion_mnist.dataset.data_api import get_train_data
 from fashion_mnist.dataset.data_api import get_validation_data
@@ -8,7 +10,7 @@ from models import conv_model
 from models import resnet_model
 tf.enable_eager_execution()
 
-sample_data = False 
+sample_data = True 
 
 (train_images, train_labels), (test_images, test_labels) = tf.keras.datasets.fashion_mnist.load_data()
 test_images = np.expand_dims(test_images, axis = -1)/255
