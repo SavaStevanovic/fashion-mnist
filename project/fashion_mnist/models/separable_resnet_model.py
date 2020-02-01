@@ -6,7 +6,7 @@ def get_model():
     net = tf.keras.layers.BatchNormalization()(net)
     net = tf.keras.layers.Activation('relu')(net)
 
-    rens_net_blocks = 4
+    rens_net_blocks = 3
     for i in range(rens_net_blocks):
         net = residual_block(net, filters = 64*2**i)
         net = residual_block(net, filters = 64*2**i)
@@ -14,7 +14,6 @@ def get_model():
             net = tf.keras.layers.AveragePooling2D()(net)
         else:
             net = tf.keras.layers.MaxPool2D()(net)
-
 
     net = tf.keras.layers.Flatten()(net)
     output = tf.keras.layers.Dense(10, activation = 'softmax')(net)
