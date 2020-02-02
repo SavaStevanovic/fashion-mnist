@@ -11,6 +11,7 @@ from models import resnet_model
 from models import separable_resnet_model
 from models import wide_resnet_model
 from models import separable_wide_resnet_model
+from models import dense_net
 tf.enable_eager_execution()
 
 sample_data = False 
@@ -25,9 +26,9 @@ if sample_data:
     get_training_sample(training_data)
     get_validation_sample(validation_data)
 
-model = separable_wide_resnet_model.get_model()
+model = dense_net.get_model()
 model.compile('adam', loss = 'sparse_categorical_crossentropy', metrics = ['sparse_categorical_crossentropy', 'accuracy'])
-model.fit(x=training_data, validation_data=validation_data, epochs=100, verbose=1, callbacks=get_callbacks(), steps_per_epoch = len(train_images)/128)
+# model.fit(x=training_data, validation_data=validation_data, epochs=100, verbose=1, callbacks=get_callbacks(), steps_per_epoch = len(train_images)/128)
 
 test_model = tf.keras.models.load_model('./checkpoints/cp.ckpt')
 test_model.evaluate(x=test_images, y=test_labels, batch_size=32, verbose=1)
