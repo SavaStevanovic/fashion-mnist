@@ -10,6 +10,7 @@ from models import conv_model
 from models import resnet_model
 from models import separable_resnet_model
 from models import wide_resnet_model
+from models import separable_wide_resnet_model
 tf.enable_eager_execution()
 
 sample_data = False 
@@ -24,7 +25,7 @@ if sample_data:
     get_training_sample(training_data)
     get_validation_sample(validation_data)
 
-model = wide_resnet_model.get_model()
+model = separable_wide_resnet_model.get_model()
 model.compile('adam', loss = 'sparse_categorical_crossentropy', metrics = ['sparse_categorical_crossentropy', 'accuracy'])
 model.fit(x=training_data, validation_data=validation_data, epochs=100, verbose=1, callbacks=get_callbacks(), steps_per_epoch = len(train_images)/128)
 
