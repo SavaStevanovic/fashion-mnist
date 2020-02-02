@@ -14,7 +14,6 @@ def get_model():
         else:
             net = tf.keras.layers.MaxPool2D()(net)
 
-
     net = tf.keras.layers.Flatten()(net)
     output = tf.keras.layers.Dense(10, activation = 'softmax')(net)
 

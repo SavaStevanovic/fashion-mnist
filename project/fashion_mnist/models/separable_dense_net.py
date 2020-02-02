@@ -17,7 +17,7 @@ def get_model():
     net = tf.keras.layers.Flatten()(net)
     output = tf.keras.layers.Dense(10, activation = 'softmax')(net)
 
-    return tf.keras.Model(inputs = inputLayer, outputs = output, name = 'densenet_model')
+    return tf.keras.Model(inputs = inputLayer, outputs = output, name = 'separable_densenet_model')
 
 def transition(net):
     net = tf.keras.layers.BatchNormalization()(net)
@@ -29,16 +29,16 @@ def transition(net):
 def bottleneck_layer(net, filters):
     net = tf.keras.layers.BatchNormalization()(net)
     net = tf.keras.layers.Activation('relu')(net)
-    net = tf.keras.layers.Conv2D(filters=4*filters, kernel_size=1, padding='SAME', use_bias=False)(net)
+    net = tf.keras.layers.SeparableConv2D(filters=4*filters, kernel_size=1, padding='SAME', use_bias=False)(net)
     net = tf.keras.layers.BatchNormalization()(net)
     net = tf.keras.layers.Activation('relu')(net)
-    net = tf.keras.layers.Conv2D(filters=filters, kernel_size=3, padding='SAME', use_bias=False)(net)
+    net = tf.keras.layers.SeparableConv2D(filters=filters, kernel_size=3, padding='SAME', use_bias=False)(net)
     return net
 
 def dense_layer(net, filters):
     net = tf.keras.layers.BatchNormalization()(net)
     net = tf.keras.layers.Activation('relu')(net)
-    net = tf.keras.layers.Conv2D(filters=filters, kernel_size=3, padding='SAME', use_bias=False)(net)
+    net = tf.keras.layers.SeparableConv2D(filters=filters, kernel_size=3, padding='SAME', use_bias=False)(net)
     return net
 
 def dense_block(net, growth_rate):
