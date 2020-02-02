@@ -6,7 +6,7 @@ def get_model():
     net = tf.keras.layers.BatchNormalization()(net)
     net = tf.keras.layers.Activation('relu')(net)
 
-    rens_net_blocks = 3
+    rens_net_blocks = 4
     for i in range(rens_net_blocks):
         net = dense_block(net, growth_rate = 32)
         if i+1!=rens_net_blocks:
