@@ -1,7 +1,7 @@
 absl-py==0.8.1
 asn1crypto==0.24.0
 astor==0.8.0
-cryptography==2.1.4
+cryptography==2.3
 gast==0.2.2
 google-pasta==0.1.7
 grpcio==1.24.3
