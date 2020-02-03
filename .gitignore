@@ -127,3 +127,7 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+models/project/fashion_mnist/models_and_logs/wide_resnet_40-4/cp.ckpt
+
+# checkpoints
+.ckpt

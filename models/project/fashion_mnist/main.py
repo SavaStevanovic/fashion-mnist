@@ -27,7 +27,7 @@ if sample_data:
     get_training_sample(training_data)
     get_validation_sample(validation_data)
 
-model = resnet_model.get_model()
+model = dense_net.get_model()
 model.summary()
 model.compile('adam', loss = 'sparse_categorical_crossentropy', metrics = ['sparse_categorical_crossentropy', 'accuracy'])
 model.fit(x=training_data, validation_data=validation_data, epochs=100, verbose=1, callbacks=get_callbacks(), steps_per_epoch = len(train_images)/128)
