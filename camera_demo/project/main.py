@@ -36,17 +36,12 @@ for _ in range(400):
 background_mask = np.mean(np.array(background_images), 0)
 background_mask_size = min(background_mask.shape[:-1])
 background_mask=background_mask[:background_mask_size,:background_mask_size]
-# cv2.imshow('background_mask',background_mask.astype(np.uint8))
-# cv2.waitKey(1)
 mask = background_mask
 while(True):
     ret, frame = cap.read()
     frame=frame[:background_mask_size,:background_mask_size]
     mask = np.abs(cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)-background_mask)
     cv2.normalize(mask,  mask, 0, 255, cv2.NORM_MINMAX)
-    # cv2.imshow('maskenormalize',mask.astype(np.uint8))
-    # if cv2.waitKey(1) & 0xFF == ord('q'):
-    #     break
 
     _, mask = cv2.threshold(mask,30,255,cv2.THRESH_BINARY)
    
@@ -60,17 +55,18 @@ while(True):
     cv2.imshow('img',cv2.resize(img, (560,560), interpolation = cv2.INTER_NEAREST))
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
+
     img = np.expand_dims(img, -1)
     img = np.expand_dims(img, 0)
     label = model.predict(img/255)[0]
 
-    # cv2.imshow('mask',mask)
-    # if cv2.waitKey(1) & 0xFF == ord('q'):
-    #     break
-
     id = np.argmax(label)
     label_str = labels_dic[id].ljust(12)
-    timed_image = cv2.putText(frame.astype(np.uint8), label_str +':'+ "{:3.1f}".format(label[id]*100)+'-' + "{:1.4f}".format(avg_frame_time), (0,50), cv2.FONT_HERSHEY_SIMPLEX, 1,(255, 255, 255) ,2)
+    label_descriptor = ''
+    if label[id]>0.7:
+        label_descriptor = label_str +':'+ "{:3.1f}".format(label[id]*100)
+    frame_time_descriptor = 'Frame time:' + "{:1.4f}".format(avg_frame_time)
+    timed_image = cv2.putText(frame.astype(np.uint8), frame_time_descriptor + '    '+ label_descriptor, (0,50), cv2.FONT_HERSHEY_SIMPLEX, 0.5,(255, 255, 255) ,2)
     
     start_point = (background_mask_size//8,background_mask_size//8)
     end_point = (7*background_mask_size//8,7*background_mask_size//8)
